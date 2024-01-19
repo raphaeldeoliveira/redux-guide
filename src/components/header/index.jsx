@@ -17,6 +17,8 @@ function Header() {
 
   const { currentUser } = useSelector((state) => state.userReducer);
 
+  console.log(currentUser)
+  
   const handleCartClick = () => {
     setCartIsVisible(true);
   };
