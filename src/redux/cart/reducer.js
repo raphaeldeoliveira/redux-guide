@@ -20,11 +20,26 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 products: [...state.products, { ...action.payload, quantity: 1 }]
             }
-
-            console.log(action)
+        case CartActionsType.REMOVE_PRODUCT:
             return {
-                ...initialState,
-                products: [ ...state.products, action.payload]
+                ...state,
+                products: state.products.filter(product => product.id !== action.payload)
+            }
+        case CartActionsType.INCREMENT_PRODUCT:
+            return {
+                ...state,
+                products: state.products.map(product => 
+                    product.id === action.payload 
+                    ? {...product, quantity: product.quantity + 1} 
+                    : product)
+            }
+        case CartActionsType.DECREMENT_PRODUCT:
+            return {
+                ...state,
+                products: state.products.map(product => 
+                    product.id === action.payload 
+                    ? {...product, quantity: product.quantity - 1} 
+                    : product).filter(product => product.quantity > 0),
             }
         default:
             return state;
